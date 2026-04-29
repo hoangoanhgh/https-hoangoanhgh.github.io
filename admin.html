@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Trị VIP V6 | HOÀNG OANH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { --gold: #D4AF37; --black: #1a1a1a; --bg: #f5f6fa; --white: #ffffff; --blue: #0068ff; --red: #c91818; --green: #00a854;}
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #333; }
+        
+        .login-container { max-width: 400px; margin: 100px auto; background: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 5px solid var(--gold); text-align: center; }
+        .login-container input { width: 100%; padding: 12px; margin-top: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-login { width: 100%; background: var(--black); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        
+        #admin-dashboard { display: none; padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .header { background: var(--black); color: var(--white); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-radius: 15px; margin-bottom: 20px; }
+        
+        .grid-container { display: grid; grid-template-columns: 2fr 1.2fr; gap: 20px; }
+        @media(max-width: 992px) { .grid-container { grid-template-columns: 1fr; } }
+        .panel { background: var(--white); border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 25px; }
+        .panel h2 { margin-top: 0; border-bottom: 2px solid var(--gold); padding-bottom: 10px; display: flex; justify-content: space-between; font-size: 1.2rem;}
+
+        /* BẢNG ĐƠN HÀNG */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #f1f1f1; padding: 12px; text-align: left; font-size: 0.8rem; color: #666; }
+        td { padding: 15px 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; vertical-align: middle; }
+        .order-content { background: #fafafa; padding: 8px; border-radius: 5px; border-left: 3px solid var(--gold); white-space: pre-line; }
+        .status-select { padding: 5px 10px; border-radius: 20px; border: 1px solid #ccc; font-weight: 600; font-family: inherit; font-size: 0.8rem; cursor: pointer; outline: none; }
+        .status-Mới.đặt { background: #fff0d4; color: #d48b00; }
+        .status-Đã.chốt { background: #d4e8ff; color: var(--blue); }
+        .status-Đang.giao { background: #e0d4ff; color: #6a00ff; }
+        .status-Hoàn.thành { background: #d4ffea; color: var(--green); }
+        .status-Hủy { background: #ffd4d4; color: var(--red); }
+
+        /* SẢN PHẨM & UPLOAD FILE */
+        .product-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        .product-item img { width: 45px; height: 45px; object-fit: cover; border-radius: 5px; margin-right: 12px; border: 1px solid #ddd;}
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 0.8rem; }
+        .form-group input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        
+        .file-upload-wrapper { border: 2px dashed #ccc; padding: 15px; text-align: center; border-radius: 8px; background: #fafafa; cursor: pointer; transition: 0.3s; position: relative; }
+        .file-upload-wrapper:hover { border-color: var(--gold); background: #fffdf5; }
+        .file-upload-wrapper input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .upload-text { font-size: 0.85rem; color: #666; font-weight: 600; }
+        
+        .btn-add { width: 100%; background: var(--black); color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-add:hover { background: var(--gold); color: var(--black); }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="login-container">
+        <h2>ĐĂNG NHẬP ADMIN</h2>
+        <input type="email" id="email-input" placeholder="Email...">
+        <input type="password" id="pass-input" placeholder="Mật khẩu...">
+        <button class="btn-login" onclick="dangNhap()">VÀO HỆ THỐNG</button>
+        <p id="error-msg" style="color:red; display:none; margin-top:10px;">Sai thông tin đăng nhập!</p>
+    </div>
+
+    <div id="admin-dashboard">
+        <div class="header">
+            <h1>HOÀNG OANH BOUTIQUE <span style="font-size: 0.9rem; color: var(--gold);">(Phiên bản V6)</span></h1>
+            <button onclick="dangXuat()" style="background:var(--gold); border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">ĐĂNG XUẤT</button>
+        </div>
+
+        <div class="grid-container">
+            <div class="panel">
+                <h2><span><i class="fa-solid fa-cart-shopping"></i> Danh Sách Đơn Hàng</span> <button onclick="taiDonHang()" style="font-size:0.7rem; cursor:pointer;"><i class="fa-solid fa-rotate"></i> Làm mới</button></h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="15%">Thời gian</th>
+                                <th width="20%">Khách hàng</th>
+                                <th width="40%">Chi tiết đơn</th>
+                                <th width="20%">Trạng thái</th>
+                                <th width="5%">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-list"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2 id="form-title"><span><i class="fa-solid fa-cloud-arrow-up"></i> Đăng Mẫu Mới</span></h2>
+                <div style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:20px;">
+                    <div class="form-group"><label>Tên Váy</label><input type="text" id="sp-ten" placeholder="VD: Đầm Lụa Đỏ..."></div>
+                    <div class="form-group"><label>Giá</label><input type="text" id="sp-gia" placeholder="VD: 1.500.000 đ"></div>
+                    
+                    <div class="form-group">
+                        <label>Hình Ảnh (Chọn 1 trong 2 cách)</label>
+                        <div class="file-upload-wrapper" id="upload-box">
+                            <input type="file" id="sp-file" accept="image/*" onchange="hienThiTenFile()">
+                            <div class="upload-text" id="upload-label"><i class="fa-solid fa-image"></i> Bấm để chọn ảnh từ máy tính/điện thoại</div>
+                        </div>
+                        <div style="text-align: center; font-size: 0.8rem; margin: 10px 0;">HOẶC</div>
+                        <input type="text" id="sp-anh" placeholder="Dán link ảnh website vào đây...">
+                    </div>
+
+                    <button class="btn-add" id="btn-submit-sp" onclick="luuSanPham()">CẬP NHẬT LÊN WEB</button>
+                    <button id="btn-cancel-edit" onclick="huySua()" style="display:none; width:100%; padding:10px; cursor:pointer; margin-top:5px;">Hủy sửa</button>
+                </div>
+                
+                <h2><span><i class="fa-solid fa-list"></i> Kho Hàng Hiện Có</span></h2>
+                <div id="product-list" style="max-height: 400px; overflow-y: auto;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const PROJECT_URL = 'https://vxdilwkywzdomqgbngcb.supabase.co';
+        const ANON_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4ZGlsd2t5d3pkb21xZ2JuZ2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NDMwOTIsImV4cCI6MjA5MjMxOTA5Mn0.yXx974hiKpMBwEGuuP89QsFttqvojl-aRex7rordZ00';
+        const _supabase = supabase.createClient(PROJECT_URL, ANON_KEY);
+
+        let danhSachKhoHang = [];
+        let idDangSua = null;
+
+        // --- HỆ THỐNG ĐĂNG NHẬP ---
+        window.onload = async () => {
+            const { data } = await _supabase.auth.getSession();
+            if (data.session) hienThiDashboard();
+        };
+
+        async function dangNhap() {
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('pass-input').value;
+            const { error } = await _supabase.auth.signInWithPassword({ email, password });
+            if (error) { document.getElementById('error-msg').style.display = 'block'; } 
+            else { hienThiDashboard(); }
+        }
+
+        function hienThiDashboard() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-dashboard').style.display = 'block';
+            taiDonHang(); taiSanPham();
+        }
+
+        async function dangXuat() { await _supabase.auth.signOut(); window.location.reload(); }
+
+        // --- 1. TÍNH NĂNG ĐƠN HÀNG VÀ TRẠNG THÁI ---
+        async function taiDonHang() {
+            const { data } = await _supabase.from('don_hang').select('*').order('id', { ascending: false });
+            let html = '';
+            const danhSachTrangThai = ['Mới đặt', 'Đã chốt Zalo', 'Đang giao', 'Hoàn thành', 'Hủy'];
+
+            data.forEach(don => {
+                let trangThaiHienTai = don.trang_thai || 'Mới đặt';
+                
+                // Tạo Menu thả xuống (Dropdown) cho trạng thái
+                let selectHtml = `<select class="status-select status-${trangThaiHienTai.replace(/ /g, '.')}" onchange="capNhatTrangThai(${don.id}, this)">`;
+                danhSachTrangThai.forEach(tt => {
+                    selectHtml += `<option value="${tt}" ${trangThaiHienTai === tt ? 'selected' : ''}>${tt}</option>`;
+                });
+                selectHtml += `</select>`;
+
+                html += `<tr>
+                    <td><small>${new Date(don.created_at).toLocaleString('vi-VN')}</small></td>
+                    <td><b>${don.ten_khach}</b><br><a href="https://zalo.me/${don.so_dt}" target="_blank" style="font-size:0.8rem; color:var(--blue);"><i class="fa-solid fa-comment-dots"></i> ${don.so_dt}</a></td>
+                    <td><div class="order-content">${don.ten_san_pham}</div></td>
+                    <td>${selectHtml}</td>
+                    <td style="text-align:center;"><button style="color:#ccc; background:none; border:none; cursor:pointer;" onclick="xoaDonHang(${don.id})"><i class="fa-solid fa-trash-can"></i></button></td>
+                </tr>`;
+            });
+            document.getElementById('order-list').innerHTML = html || '<tr><td colspan="5" style="text-align:center;">Chưa có đơn hàng</td></tr>';
+        }
+
+        async function capNhatTrangThai(id_don, theSelect) {
+            const trangThaiMoi = theSelect.value;
+            // Đổi màu sắc của nút theo trạng thái
+            theSelect.className = `status-select status-${trangThaiMoi.replace(/ /g, '.')}`;
+            // Cập nhật lên Supabase
+            await _supabase.from('don_hang').update({ trang_thai: trangThaiMoi }).eq('id', id_don);
+        }
+
+        async function xoaDonHang(id) {
+            if (confirm('Bà Chủ muốn xóa vĩnh viễn đơn hàng này?')) {
+                await _supabase.from('don_hang').delete().eq('id', id); taiDonHang();
+            }
+        }
+
+        // --- 2. TÍNH NĂNG UPLOAD ẢNH VÀ SẢN PHẨM ---
+        function hienThiTenFile() {
+            const fileInput = document.getElementById('sp-file');
+            const label = document.getElementById('upload-label');
+            if (fileInput.files.length > 0) {
+                label.innerHTML = `<i class="fa-solid fa-check" style="color:green"></i> Đã chọn: <b>${fileInput.files[0].name}</b>`;
+                document.getElementById('upload-box').style.borderColor = 'green';
+                document.getElementById('sp-anh').value = ''; // Nếu chọn file thì xóa link
+            }
+        }
+
+        async function luuSanPham() {
+            const ten = document.getElementById('sp-ten').value;
+            const gia = document.getElementById('sp-gia').value;
+            let linkAnhCuoiCung = document.getElementById('sp-anh').value;
+            const fileInput = document.getElementById('sp-file');
+            const btn = document.getElementById('btn-submit-sp');
+
+            if (!ten || !gia) return alert("Vui lòng nhập Tên và Giá!");
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG XỬ LÝ...';
+
+            // KIỂM TRA NẾU CÓ CHỌN FILE ẢNH TỪ MÁY TÍNH
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const fileExt = file.name.split('.').pop();
+                const fileName = `vay_${Date.now()}.${fileExt}`; // Tạo tên file không trùng
+
+                // Bắn ảnh lên kho 'kho-anh' của Supabase
+                const { error: uploadError } = await _supabase.storage.from('kho-anh').upload(fileName, file);
+                
+                if (uploadError) {
+                    alert('Lỗi tải ảnh: ' + uploadError.message);
+                    btn.innerHTML = 'CẬP NHẬT LÊN WEB';
+                    return;
+                }
+
+                // Lấy đường link công khai của ảnh vừa tải
+                const { data } = _supabase.storage.from('kho-anh').getPublicUrl(fileName);
+                linkAnhCuoiCung = data.publicUrl;
+            }
+
+            if (!linkAnhCuoiCung) return alert("Vui lòng chọn ảnh hoặc dán link ảnh!");
+
+            // LƯU VÀO CƠ SỞ DỮ LIỆU
+            if (idDangSua) { 
+                await _supabase.from('san_pham').update({ ten, gia, hinh_anh: linkAnhCuoiCung }).eq('id', idDangSua); 
+            } else { 
+                await _supabase.from('san_pham').insert([{ ten, gia, hinh_anh: linkAnhCuoiCung }]); 
+            }
+            
+            huySua(); taiSanPham();
+        }
+
+        // CÁC HÀM XỬ LÝ SẢN PHẨM CƠ BẢN
+        async function taiSanPham() {
+            const { data } = await _supabase.from('san_pham').select('*').order('id', { ascending: false });
+            danhSachKhoHang = data;
+            let html = '';
+            data.forEach(sp => {
+                html += `<div class="product-item">
+                    <div style="display:flex; align-items:center;">
+                        <img src="${sp.hinh_anh || ''}">
+                        <div><b>${sp.ten}</b><br><small>${sp.gia}</small></div>
+                    </div>
+                    <div>
+                        <button style="color:blue; background:none; border:none; cursor:pointer;" onclick="chuanBiSua(${sp.id})"><i class="fa-solid fa-pen"></i></button>
+                        <button style="color:red; background:none; border:none; cursor:pointer;" onclick="xoaSanPham(${sp.id})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('product-list').innerHTML = html;
+        }
+
+        function chuanBiSua(id) {
+            const sp = danhSachKhoHang.find(item => item.id === id);
+            idDangSua = id;
+            document.getElementById('sp-ten').value = sp.ten;
+            document.getElementById('sp-gia').value = sp.gia;
+            document.getElementById('sp-anh').value = sp.hinh_anh;
+            document.getElementById('btn-submit-sp').innerText = 'LƯU THAY ĐỔI';
+            document.getElementById('btn-cancel-edit').style.display = 'block';
+            
+            // Đặt lại ô chọn file
+            document.getElementById('sp-file').value = '';
+            document.getElementById('upload-label').innerHTML = `<i class="fa-solid fa-image"></i> Bấm để chọn ảnh thay thế (nếu muốn)`;
+            document.getElementById('upload-box').style.borderColor = '#ccc';
+        }
+
+        function huySua() {
+            idDangSua = null;
+            document.getElementById('sp-ten').value = '';
+            document.getElementById('sp-gia').value = '';
+            document.getElementById('sp-anh').value = '';
+            document.getElementById('sp-file').value = '';
+            document.getElementById('upload-label').innerHTML = `<i class="fa-solid fa-image"></i> Bấm để chọn ảnh từ máy tính/điện thoại`;
+            document.getElementById('upload-box').style.borderColor = '#ccc';
+            document.getElementById('btn-submit-sp').innerText = 'CẬP NHẬT LÊN WEB';
+            document.getElementById('btn-cancel-edit').style.display = 'none';
+        }
+
+        async function xoaSanPham(id) {
+            if(confirm('Xóa mẫu này khỏi web?')) { await _supabase.from('san_pham').delete().eq('id', id); taiSanPham(); }
+        }
+    </script>
+</body>
+</html>
