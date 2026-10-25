@@ -1,339 +1,307 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta property="og:title" content="HOÀNG OANH Boutique | Đẳng Cấp Thời Trang Quý Cô">
-    <meta property="og:description" content="Khám phá bộ sưu tập thiết kế độc bản, sang trọng và tinh tế dành riêng cho phái đẹp.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800"> <meta property="og:type" content="website">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOÀNG OANH | Đẳng Cấp & Tinh Tế</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#5c0910">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://script.google.com">
+    <title>HOÀNG OANH | Thời Trang Nữ · Mặc Đẹp Mỗi Ngày</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Montserrat:wght@400;500;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --gold: #D4AF37; --black: #0a0a0a; --white: #ffffff; --gray: #f5f5f5; --red: #c91818; }
+        :root {
+            --crimson: #7a1218;
+            --crimson-dark: #4f080d;
+            --coral: #d94a38;
+            --gold: #c59b41;
+            --gold-light: #f5d98b;
+            --cream: #f8efe6;
+            --cream-card: #fffaf5;
+            --line: #e6d6c6;
+            --text: #2a1810;
+            --muted: #6e5a4f;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); overflow-x: hidden; scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        [hidden] { display: none !important; }
 
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        /* ===== HEADER ===== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(248, 239, 230, 0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            padding: 14px 4%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .m-menu-btn { display: none; background: none; border: 0; font-size: 1.35rem; color: var(--text); cursor: pointer; padding: 6px; }
+        .brand { text-decoration: none; display: flex; flex-direction: column; align-items: flex-start; position: relative; }
+        .brand-crown { display: none; width: 28px; height: 20px; margin-bottom: -4px; transform: rotate(-10deg); }
+        .brand-title { font-family: 'Playfair Display', serif; font-size: clamp(1.35rem, 2.2vw, 1.85rem); font-weight: 700; letter-spacing: 2px; color: #2b1810; line-height: 1.1; }
+        .brand-title span { color: var(--coral); }
+        .brand-sub { display: none; font-family: 'Dancing Script', cursive; font-size: 0.98rem; color: #3d251b; margin-top: 2px; }
+        .nav-menu { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 32px); list-style: none; }
+        .nav-menu a { text-decoration: none; color: var(--text); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 6px 0; border-bottom: 2px solid transparent; transition: .2s; }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--crimson); border-bottom-color: var(--crimson); }
+        .header-actions { display: flex; align-items: center; gap: 16px; }
+        .hotline-top { text-decoration: none; color: var(--crimson); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; padding-right: 14px; border-right: 1px solid var(--line); }
+        .icon-btn { background: none; border: 0; color: var(--text); font-size: 1.15rem; cursor: pointer; position: relative; padding: 6px; transition: transform .2s, color .2s; }
+        .icon-btn:hover { color: var(--crimson); transform: translateY(-1px); }
+        .badge-count { position: absolute; top: -2px; right: -4px; background: var(--crimson); color: #fff; font-size: 0.68rem; font-weight: 700; min-width: 18px; height: 18px; border-radius: 99px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
 
-        /* HEADER & HERO */
-        header { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--black); letter-spacing: 2px; text-decoration: none; }
-        .logo span { color: var(--gold); }
+        /* ===== BANNER BẰNG THẺ PICTURE ===== */
+        .hero-banner-wrap { position: relative; width: 100%; background: var(--cream); overflow: hidden; display: block; }
+        .hero-banner-wrap picture img { width: 100%; height: auto; display: block; object-fit: contain; }
         
-        .hero { height: 80vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); }
-        .hero h1 { font-size: 4rem; margin-bottom: 20px; letter-spacing: 5px; }
-        .hero p { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); }
-
-        /* SẢN PHẨM & VIDEO LOOKBOOK HOVER */
-        .privileges { padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; background: var(--black); color: var(--white); text-align: center; }
-        .priv-item i { font-size: 2rem; color: var(--gold); margin-bottom: 15px; }
-        .section-title { text-align: center; padding: 80px 0 40px; }
-        .section-title h2 { font-size: 2.5rem; position: relative; display: inline-block; }
-        .section-title h2::after { content: ''; width: 50px; height: 2px; background: var(--gold); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
+        /* Vùng bấm thông minh trên Banner Desktop */
+        .hotspot { position: absolute; z-index: 5; cursor: pointer; border-radius: 999px; }
+        .hs-d-collection { left: 5.45%; top: 79.62%; width: 20.52%; height: 11.06%; }
+        .hs-d-call       { left: 27.58%; top: 80.73%; width: 12.83%; height: 9%; }
         
-        .product-grid { padding: 0 5% 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .product-card { background: var(--white); overflow: hidden; transition: 0.5s; position: relative; text-align: center; padding-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);}
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-        .img-container { overflow: hidden; position: relative; }
-        .product-img { width: 100%; height: 450px; object-fit: cover; transition: transform 0.8s ease; }
-        .product-card:hover .product-img { transform: scale(1.08); } 
+        /* Vùng bấm thông minh trên Banner Mobile */
+        .hs-m-call  { display: none; left: 6.22%; top: 87.89%; width: 50.8%; height: 8.18%; }
+
+        @media (max-width: 768px) {
+            header { padding: 10px 4%; }
+            .m-menu-btn { display: inline-flex; }
+            .nav-menu, .hotline-top { display: none; }
+            .brand { align-items: center; margin: 0 auto; }
+            .brand-crown, .brand-sub { display: block; }
+            
+            /* Đổi hotspot sang mobile */
+            .hs-d-collection, .hs-d-call { display: none; }
+            .hs-m-call { display: block; }
+        }
+
+        /* ===== KHU VỰC SẢN PHẨM & BỘ LỌC ===== */
+        .section-wrap { max-width: 1340px; margin: 0 auto; padding: clamp(36px, 5vw, 68px) 4%; }
+        .section-head { text-align: center; margin-bottom: 28px; }
+        .section-eyebrow { color: var(--crimson); font-size: 0.76rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .section-head h2 { font-size: clamp(1.7rem, 3.8vw, 2.5rem); color: var(--text); letter-spacing: 2px; position: relative; display: inline-block; padding-bottom: 12px; }
+        .section-head h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 64px; height: 2px; background: var(--gold); }
+        .toolbar { display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; align-items: center; max-width: 1080px; margin: 0 auto 22px; }
+        .search { position: relative; flex: 1 1 260px; }
+        .search i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--crimson); }
+        .search input, .toolbar select { width: 100%; padding: 13px 16px; border: 1px solid var(--line); border-radius: 999px; font: inherit; font-size: 0.92rem; background: #fff; outline: none; }
+        .search input { padding-left: 44px; }
+        .chips { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 32px; }
+        .chip { border: 1px solid var(--line); background: #fff; padding: 9px 20px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+        .chip.on { background: var(--crimson); color: #fff; border-color: var(--crimson); }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 275px), 1fr)); gap: clamp(18px, 2.6vw, 32px); }
+        .product-card { background: var(--cream-card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; position: relative; transition: .3s; }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(60, 20, 10, 0.12); }
+        .img-wrap { aspect-ratio: 3/4; overflow: hidden; background: #f3e5d7; cursor: pointer; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: .6s; }
+        .product-card:hover .product-img { transform: scale(1.06); }
+        .product-info { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+        .product-cat { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+        .product-info h3 { font-size: 1.08rem; font-weight: 600; margin-bottom: 6px; }
+        .product-price { color: var(--crimson); font-weight: 700; font-size: 1.05rem; margin-bottom: 14px; }
+        .card-actions { margin-top: auto; display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+        .btn-buy-now { padding: 10px 14px; background: linear-gradient(135deg, var(--crimson), var(--crimson-dark)); color: #fff; border: 0; border-radius: 10px; font: inherit; font-size: 0.76rem; font-weight: 700; cursor: pointer; }
+        .btn-quick-cart { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--gold); background: #fff; color: var(--crimson); cursor: pointer; }
+
+        /* ===== MODAL & CART ===== */
+        .modal, .drawer-backdrop { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 16px; }
+        .drawer-backdrop { justify-content: flex-end; padding: 0; }
+        .modal-box { background: var(--cream-card); width: min(100%, 960px); max-height: 92vh; overflow-y: auto; border-radius: 20px; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+        .drawer { width: min(100%, 460px); height: 100%; background: var(--cream-card); display: flex; flex-direction: column; }
+        .modal-x, .drawer-close { position: absolute; top: 12px; right: 12px; z-index: 10; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.92); font-size: 1.5rem; cursor: pointer; }
+        .drawer-close { position: static; background: none; color: #fff; width: auto; height: auto; }
+        .m-gal img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+        .m-side { padding: 30px 28px; display: flex; flex-direction: column; gap: 14px; }
+        .size-options { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .size-btn { padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; }
+        .size-btn.active { background: var(--crimson); color: #fff; border-color: var(--crimson); }
+        .form-input { width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 8px; font: inherit; font-size: 0.9rem; }
         
-        /* SCARCITY - DẢI RUY BĂNG ĐỘC BẢN */
-        .ribbon { position: absolute; top: 15px; left: -35px; background: var(--red); color: white; padding: 5px 40px; transform: rotate(-45deg); font-size: 0.7rem; font-weight: bold; letter-spacing: 1px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .drawer-head { padding: 18px 22px; background: var(--crimson); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .drawer-body { padding: 18px 22px; overflow-y: auto; flex: 1; }
+        .cart-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: center; }
+        .cart-item img { width: 60px; height: 80px; object-fit: cover; border-radius: 8px; }
 
-        .product-info { padding: 20px; }
-        .product-info h3 { font-size: 1.3rem; margin-bottom: 10px; }
-        .product-price { color: var(--gold); font-weight: 600; font-size: 1.1rem; }
-        .btn-vip { display: inline-block; margin-top: 15px; padding: 12px 30px; background: var(--black); color: var(--white); text-decoration: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; transition: 0.3s; border: 1px solid var(--black); cursor: pointer; }
-        .btn-vip:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
-
-        /* QUÝ CÔ HOÀNG OANH - SOCIAL PROOF */
-        .feedback-section { background: var(--gray); padding-bottom: 80px; }
-        .feedback-container { display: flex; overflow-x: auto; gap: 20px; padding: 0 5%; scroll-snap-type: x mandatory; }
-        .feedback-container::-webkit-scrollbar { display: none; }
-        .feedback-card { min-width: 300px; background: var(--white); padding: 30px; border-left: 3px solid var(--gold); scroll-snap-align: start; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .feedback-card p { font-style: italic; color: #555; font-size: 0.95rem; line-height: 1.6; }
-        .feedback-author { margin-top: 15px; font-weight: 700; color: var(--black); display: flex; align-items: center; gap: 10px; }
-        .feedback-author i { color: var(--gold); }
-
-        /* TỦ ĐỒ (GIỎ HÀNG) LƠ LỬNG */
-        #cart-floating-btn { position: fixed; top: 80px; right: 20px; background: var(--gold); color: var(--black); width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; z-index: 1001; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; }
-        #cart-floating-btn:hover { transform: scale(1.1); }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--red); color: white; font-size: 0.8rem; font-weight: bold; width: 25px; height: 25px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
-
-        /* GIAO DIỆN TỦ ĐỒ & CHAR AI */
-        #char-ai-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2500; opacity: 0; visibility: hidden; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
-        #char-ai-overlay.active { opacity: 1; visibility: visible; }
-        .char-box { background: var(--white); width: 95%; max-width: 800px; border-radius: 15px; position: relative; transform: translateY(50px); transition: 0.5s; display: flex; flex-wrap: wrap; overflow: hidden; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3); }
-        #char-ai-overlay.active .char-box { transform: translateY(0); }
-        .char-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #888; z-index: 10; }
-        
-        .cart-section { flex: 1; min-width: 300px; background: var(--gray); padding: 30px; border-right: 1px solid #ddd; max-height: 80vh; overflow-y: auto; }
-        .cart-section h3 { font-family: 'Playfair Display', serif; color: var(--black); margin-bottom: 20px; border-bottom: 2px solid var(--gold); padding-bottom: 10px;}
-        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #ccc; font-size: 0.9rem; }
-        .remove-btn { color: var(--red); cursor: pointer; font-size: 1.2rem; }
-        .cart-total { margin-top: 20px; font-size: 1.2rem; font-weight: bold; text-align: right; color: var(--black); }
-        .cart-total span { color: var(--gold); font-size: 1.5rem; }
-        .scarcity-warning { color: var(--red); font-size: 0.8rem; margin-top: 15px; font-style: italic; text-align: center; background: #ffebeb; padding: 10px; border-radius: 5px; }
-
-        .ai-section { flex: 1; min-width: 300px; padding: 30px; background: var(--white); text-align: center; }
-        .char-header h3 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 5px; font-size: 1.6rem; }
-        .char-header p { font-size: 0.85rem; color: #555; margin-bottom: 20px; font-style: italic; }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; }
-        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; }
-        .size-row { display: flex; gap: 15px; }
-        .btn-submit-char { width: 100%; padding: 15px; background: var(--black); color: var(--white); border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; border-radius: 5px; margin-top: 10px; letter-spacing: 1px;}
-        .btn-submit-char:hover { background: var(--gold); color: var(--black); }
-
-        footer { background: var(--black); color: var(--white); padding: 50px 5% 30px; text-align: center; position: relative;}
-        
-        /* CSS CHO NÚT MẠNG XÃ HỘI */
-        .social-buttons { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
-        .btn-social { padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; gap: 8px; color: var(--white); }
-        .btn-fb { background: #1877F2; }
-        .btn-fb:hover { background: #0c5dc7; }
-        .btn-zalo { background: #0068ff; }
-        .btn-zalo:hover { background: #0052cc; }
-
-        /* NÚT ADMIN BÍ MẬT */
-        .admin-secret-btn { position: absolute; bottom: 10px; right: 20px; color: #333; font-size: 1.2rem; text-decoration: none; opacity: 0.3; transition: 0.3s; }
-        .admin-secret-btn:hover { opacity: 1; color: var(--gold); }
+        @media (max-width: 768px) {
+            .modal-box { grid-template-columns: 1fr; border-radius: 20px 20px 0 0; align-self: flex-end; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
     <header>
-        <a href="#" class="logo">HOÀNG <span>OANH</span></a>
-        <span style="color: var(--gold); font-weight: 600;"><i class="fa-brands fa-zalo"></i> 0978 612 816</span>
+        <button class="m-menu-btn" id="btn-m-menu"><i class="fa-solid fa-bars"></i></button>
+        <a href="#" class="brand">
+            <div class="brand-title">HOÀNG <span>OANH</span></div>
+            <div class="brand-sub">Thời trang nữ · Mặc đẹp mỗi ngày</div>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="#" class="active">Trang chủ</a></li>
+            <li><a href="#san-pham">Sản phẩm</a></li>
+            <li><a href="#footer">Liên hệ</a></li>
+        </ul>
+        <div class="header-actions">
+            <a href="tel:0978612816" class="hotline-top"><i class="fa-solid fa-phone"></i> 0978 612 816</a>
+            <button class="icon-btn" id="btn-open-cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="badge-count" id="cart-badge">0</span>
+            </button>
+        </div>
     </header>
 
-    <div id="cart-floating-btn" onclick="openCharAI()">
-        <i class="fa-solid fa-bag-shopping"></i>
-        <div class="cart-count" id="cart-counter">0</div>
-    </div>
-
-    <section class="hero">
-        <p data-aos="fade-up">Khẳng định phong cách thượng lưu</p>
-        <h1 data-aos="fade-up" data-aos-delay="200">ĐẲNG CẤP & TINH TẾ</h1>
-        <a href="#san-pham" class="btn-vip" data-aos="fade-up" data-aos-delay="400">KHÁM PHÁ BỘ SƯU TẬP</a>
+    <!-- BANNER PICTURE (TỰ ĐỘNG CHỌN ẢNH THEO MÀN HÌNH) -->
+    <section class="hero-banner-wrap" aria-label="Banner Hoàng Oanh">
+        <picture>
+            <source media="(max-width: 768px)" srcset="banner-dien-thoai.png" width="933" height="892">
+            <img src="banner-may-tinh.png" width="1925" height="633" fetchpriority="high" alt="HOÀNG OANH - Thời trang nữ, mặc đẹp mỗi ngày. Giao hàng toàn quốc, đổi trả dễ dàng, tư vấn miễn phí. Gọi 0978 612 816.">
+        </picture>
+        
+        <!-- Hotspots -->
+        <a href="#san-pham" class="hotspot hs-d-collection" title="Xem bộ sưu tập"></a>
+        <a href="tel:0978612816" class="hotspot hs-d-call" title="Gọi tư vấn 0978 612 816"></a>
+        <a href="tel:0978612816" class="hotspot hs-m-call" title="Gọi ngay 0978 612 816"></a>
     </section>
 
-    <section id="san-pham">
-        <div class="section-title"><h2>THIẾT KẾ MỚI NHẤT</h2></div>
-        <div class="product-grid" id="product-container">
-            <p style="text-align: center; grid-column: 1/-1; color: var(--gold);">Đang tải dữ liệu từ kho...</p>
+    <!-- DANH SÁCH SẢN PHẨM -->
+    <section id="san-pham" class="section-wrap">
+        <div class="section-head">
+            <p class="section-eyebrow">Bộ Sưu Tập Thượng Lưu</p>
+            <h2>THIẾT KẾ MỚI NHẤT</h2>
         </div>
-    </section>
-
-    <section class="feedback-section">
-        <div class="section-title"><h2>QUÝ CÔ HOÀNG OANH</h2></div>
-        <div class="feedback-container">
-            <div class="feedback-card">
-                <p>"Chất lụa thực sự xuất sắc, dáng váy tôn eo chuẩn xác. Lần đầu tôi mua online mà vừa in như may đo trực tiếp vậy. Rất đẳng cấp!"</p>
-                <div class="feedback-author"><i class="fa-solid fa-star"></i> Nữ Doanh Nhân Lan Ngọc</div>
+        <div class="toolbar">
+            <div class="search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="q" type="search" placeholder="Tìm tên đầm, váy lụa, vest...">
             </div>
-            <div class="feedback-card">
-                <p>"Char AI tính size rất hay, mình không cần mất thời gian chọn. Váy nhận được bọc gói thơm phức, thiết kế sang trọng mặc đi tiệc ai cũng hỏi."</p>
-                <div class="feedback-author"><i class="fa-solid fa-star"></i> Chị Bích Phương - TP.HCM</div>
-            </div>
-            <div class="feedback-card">
-                <p>"Dịch vụ chăm sóc 1-1 qua Zalo quá tuyệt vời. Cảm giác được phục vụ như một Thượng khách thực sự. Sẽ ủng hộ shop dài dài."</p>
-                <div class="feedback-author"><i class="fa-solid fa-star"></i> Chị Thu Trang - Hà Nội</div>
-            </div>
+            <select id="sort">
+                <option value="new">Mới nhất</option>
+                <option value="asc">Giá thấp → cao</option>
+                <option value="desc">Giá cao → thấp</option>
+            </select>
         </div>
+        <div class="chips" id="chips"></div>
+        <div class="product-grid" id="product-container"></div>
     </section>
 
-    <div id="char-ai-overlay">
-        <div class="char-box">
-            <i class="fa-solid fa-xmark char-close" onclick="closeCharAI()"></i>
-            
-            <div class="cart-section">
-                <h3>Tủ Đồ Của Quý Khách</h3>
-                <div id="cart-items-container">
-                    <p style="color: #888; font-style: italic;">Tủ đồ đang trống.</p>
-                </div>
-                <div class="cart-total" id="cart-total-box" style="display: none;">
-                    Tổng cộng: <span id="cart-total-price">0 đ</span>
-                </div>
-                <div class="scarcity-warning"><i class="fa-regular fa-clock"></i> Cảnh báo: Các thiết kế độc bản trong tủ đồ sẽ tự động làm mới sau 30 phút. Vui lòng chốt đơn ngay!</div>
-            </div>
-
-            <div class="ai-section">
-                <div class="char-header">
-                    <h3>Char AI Stylist</h3>
-                    <p>Cô ấy đang tính toán tổng hóa đơn và kích cỡ cho quý khách...</p>
-                </div>
-                <div class="input-group">
-                    <label>Tên Quý Khách</label>
-                    <input type="text" id="char-ten" placeholder="Nhập tên của quý khách...">
-                </div>
-                <div class="input-group">
-                    <label>Số Điện Thoại Zalo</label>
-                    <input type="tel" id="char-sdt" placeholder="Để quản gia liên hệ...">
-                </div>
-                <div class="size-row">
-                    <div class="input-group" style="flex: 1;">
-                        <label>Chiều cao (cm)</label>
-                        <input type="number" id="char-cao" placeholder="VD: 160">
-                    </div>
-                    <div class="input-group" style="flex: 1;">
-                        <label>Cân nặng (kg)</label>
-                        <input type="number" id="char-nang" placeholder="VD: 52">
+    <!-- MODAL SẢN PHẨM -->
+    <div id="modal" class="modal" hidden>
+        <div class="modal-box">
+            <button class="modal-x" id="m-close">&times;</button>
+            <div class="m-gal"><img id="m-img" alt=""></div>
+            <div class="m-side">
+                <h3 id="m-prod" style="font-size:1.5rem"></h3>
+                <div id="m-price" style="font-size:1.3rem;color:var(--crimson);font-weight:bold"></div>
+                
+                <div>
+                    <span>Kích cỡ (Size):</span>
+                    <div class="size-options" id="m-sizes">
+                        <button class="size-btn active" data-size="M">M</button>
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="XL">XL</button>
+                        <button class="size-btn" data-size="May đo">May đo riêng</button>
                     </div>
                 </div>
-                <button class="btn-submit-char" onclick="xuLyChotDonToanBo()">GỬI YÊU CẦU ĐẶT HÀNG</button>
+
+                <form id="m-form" style="margin-top:10px">
+                    <input class="form-input" id="m-phone" required type="tel" placeholder="Số điện thoại Quý khách *" style="margin-bottom:8px">
+                    <button class="btn-buy-now" type="submit" style="width:100%;padding:14px;font-size:1rem">ĐẶT NHANH GIAO TẬN NHÀ</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <footer>
-        <h2>HOÀNG OANH</h2>
-        <div class="social-buttons">
-            <a href="https://www.facebook.com/oanh.vo.92775838?locale=vi_VN" target="_blank" class="btn-social btn-fb"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
-            <a href="https://zalo.me/0978612816" target="_blank" class="btn-social btn-zalo"><i class="fa-solid fa-comment-dots"></i> Zalo</a>
+    <!-- GIỎ HÀNG -->
+    <div id="cart-drawer" class="drawer-backdrop" hidden>
+        <div class="drawer">
+            <div class="drawer-head">
+                <h3>Giỏ Hàng</h3>
+                <button class="drawer-close" id="cart-close">&times;</button>
+            </div>
+            <div class="drawer-body">
+                <div id="cart-items"></div>
+                <form id="checkout-form" style="margin-top:20px" hidden>
+                    <input class="form-input" id="ck-phone" type="tel" placeholder="SĐT Nhận Hàng *" required style="margin-bottom:8px">
+                    <input class="form-input" id="ck-addr" placeholder="Địa chỉ giao hàng *" required style="margin-bottom:12px">
+                    <button type="submit" class="btn-buy-now" style="width:100%;padding:14px">XÁC NHẬN ĐƠN HÀNG</button>
+                </form>
+            </div>
         </div>
-        
-        <p>© 2024 HOÀNG OANH Concepts. All Rights Reserved.</p>
-        
-        <a href="admin.html" class="admin-secret-btn" title="Khu vực Quản Trị Viên"><i class="fa-solid fa-lock"></i></a>
+    </div>
+
+    <footer id="footer">
+        <h2 style="color:var(--gold-light);margin-bottom:10px">HOÀNG OANH</h2>
+        <p>Hotline / Zalo VIP: 0978 612 816</p>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzJhGs835s1DjxS4HwqfXJgqS9QTivgufnS5S1okYzN2JaKtS6FRNoG5TYoNBC6Z_TK/exec';
+        let ALL = [
+            { id: '1', ten: 'Váy Lụa Hoàng Gia', gia: '1.250.000đ', nhom: 'Đầm Lụa', hinh_anh: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500' },
+            { id: '2', ten: 'Vest Công Sở Sang Trọng', gia: '1.550.000đ', nhom: 'Vest', hinh_anh: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500' }
+        ];
 
-        const _db = supabase.createClient('https://vxdilwkywzdomqgbngcb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4ZGlsd2t5d3pkb21xZ2JuZ2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NDMwOTIsImV4cCI6MjA5MjMxOTA5Mn0.yXx974hiKpMBwEGuuP89QsFttqvojl-aRex7rordZ00');
-
-        let gioHang = [];
-
-        async function loadProducts() {
-            const { data, error } = await _db.from('san_pham').select('*').order('created_at', { ascending: false });
-            if (error) return;
-            const container = document.getElementById('product-container');
-            container.innerHTML = ''; 
-            data.forEach((p, i) => {
-                let ribbonHtml = (i % 2 === 0) ? '<div class="ribbon">ĐỘC BẢN CÒN 2</div>' : '';
-
-                container.innerHTML += `
-                    <div class="product-card" data-aos="zoom-in" data-aos-delay="${(i % 3) * 200}">
-                        ${ribbonHtml}
-                        <div class="img-container">
-                            <img src="${p.hinh_anh}" class="product-img">
-                        </div>
-                        <div class="product-info">
-                            <h3>${p.ten}</h3><p class="product-price">${p.gia}</p>
-                            <button class="btn-vip" onclick="themVaoTuDo('${p.ten}', '${p.gia}')">THÊM VÀO TỦ ĐỒ</button>
-                        </div>
-                    </div>`;
-            });
+        const $ = id => document.getElementById(id);
+        
+        function render() {
+            $('product-container').innerHTML = ALL.map(p => `
+                <div class="product-card" onclick="openModal('${p.id}')">
+                    <div class="img-wrap"><img src="${p.hinh_anh}" class="product-img"></div>
+                    <div class="product-info">
+                        <h3>${p.ten}</h3><p class="product-price">${p.gia}</p>
+                        <button class="btn-buy-now">ĐẶT MUA</button>
+                    </div>
+                </div>`).join('');
         }
 
-        function chuyenGiaThanhSo(giaChuoi) { return parseInt(giaChuoi.replace(/[^0-9]/g, '')) || 0; }
-        function formatTien(so) { return so.toLocaleString('vi-VN') + ' đ'; }
-
-        function themVaoTuDo(ten, gia) {
-            gioHang.push({ ten: ten, gia: gia, giaSo: chuyenGiaThanhSo(gia) });
-            capNhatGiaoDienTuDo();
-            
-            let btn = event.target;
-            let originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> ĐÃ THÊM';
-            btn.style.background = 'var(--gold)'; btn.style.color = 'var(--black)';
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = 'var(--black)'; btn.style.color = 'var(--white)';
-            }, 1000);
+        async function loadData() {
+            render(); // Render fallback first
+            try {
+                const res = await fetch(API_URL + '?action=products');
+                const json = await res.json();
+                if (json.data) { ALL = json.data; render(); }
+            } catch (e) {}
+        }
+        
+        let cur = null, curSize = 'M';
+        function openModal(id) {
+            cur = ALL.find(x => x.id === id);
+            $('m-img').src = cur.hinh_anh;
+            $('m-prod').textContent = cur.ten;
+            $('m-price').textContent = cur.gia;
+            $('modal').hidden = false;
         }
 
-        function xoaKhoiTuDo(index) { gioHang.splice(index, 1); capNhatGiaoDienTuDo(); }
-
-        function capNhatGiaoDienTuDo() {
-            document.getElementById('cart-counter').innerText = gioHang.length;
-            const container = document.getElementById('cart-items-container');
-            const totalBox = document.getElementById('cart-total-box');
-            
-            if (gioHang.length === 0) {
-                container.innerHTML = '<p style="color: #888; font-style: italic;">Tủ đồ đang trống.</p>';
-                totalBox.style.display = 'none'; return;
+        $('m-close').onclick = () => $('modal').hidden = true;
+        
+        $('m-sizes').onclick = (e) => {
+            if(e.target.classList.contains('size-btn')) {
+                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                curSize = e.target.dataset.size;
             }
+        };
 
-            let html = ''; let tongTien = 0;
-            gioHang.forEach((item, index) => {
-                html += `<div class="cart-item">
-                            <div><b>${item.ten}</b> <br><span style="color: var(--gold);">${item.gia}</span></div>
-                            <i class="fa-solid fa-trash remove-btn" onclick="xoaKhoiTuDo(${index})"></i>
-                        </div>`;
-                tongTien += item.giaSo;
-            });
+        $('m-form').onsubmit = (e) => {
+            e.preventDefault();
+            alert(`Cảm ơn Quý khách! Stylist sẽ gọi lại số ${$('m-phone').value} để chốt mẫu ${cur.ten} (Size ${curSize}).`);
+            $('modal').hidden = true;
+        };
 
-            container.innerHTML = html;
-            document.getElementById('cart-total-price').innerText = formatTien(tongTien);
-            totalBox.style.display = 'block';
-        }
-
-        function openCharAI() { document.getElementById('char-ai-overlay').classList.add('active'); }
-        function closeCharAI() { document.getElementById('char-ai-overlay').classList.remove('active'); }
-
-        async function xuLyChotDonToanBo() {
-            if (gioHang.length === 0) { alert("Dạ, tủ đồ đang trống ạ!"); return closeCharAI(); }
-
-            const ten = document.getElementById('char-ten').value.trim();
-            const sdt = document.getElementById('char-sdt').value.trim();
-            const cao = document.getElementById('char-cao').value;
-            const nang = document.getElementById('char-nang').value;
-
-            if (!ten || !sdt || !cao || !nang) { alert("Vui lòng điền đủ thông tin để hoàn tất đơn ạ!"); return; }
-
-            let size = "M"; const bmi = nang / ((cao/100) * (cao/100));
-            if (nang < 48 || bmi < 18.5) size = "S"; else if (nang > 55 && nang <= 62) size = "L"; else if (nang > 62) size = "XL";
-
-            let danhSachMua = gioHang.map(item => `- ${item.ten} (${item.gia})`).join('\n');
-            let tongTienCuoi = document.getElementById('cart-total-price').innerText;
-            const chiTietDon = `MUA CÁC MÓN:\n${danhSachMua}\n=> TỔNG: ${tongTienCuoi}\n[Cao: ${cao}cm, Nặng: ${nang}kg -> Size: ${size}]`;
-
-            const btn = document.querySelector('.btn-submit-char'); btn.innerHTML = 'ĐANG XỬ LÝ...';
-            
-            const { error } = await _db.from('don_hang').insert([{ ten_khach: ten, so_dt: sdt, ten_san_pham: chiTietDon }]);
-
-            if (!error) {
-                // Đổi thông báo chốt đơn sang hướng Gọi Điện Trực Tiếp
-                alert(`🎉 CHỐT ĐƠN THÀNH CÔNG!\n\nHệ thống đã nhận đơn hàng của ${ten}.\nĐể đảm bảo an toàn, chuyên viên của Hoàng Oanh Boutique sẽ GỌI ĐIỆN TRỰC TIẾP qua số ${sdt} cho bạn trong vòng 5 phút tới để xác nhận nhé!`);
-                
-                closeCharAI(); gioHang = []; capNhatGiaoDienTuDo();
-                document.querySelectorAll('.ai-section input').forEach(input => input.value = '');
-            } else alert("Hệ thống đang bận. Vui lòng thử lại!");("Hệ thống đang bận. Vui lòng thử lại!");
-            
-            btn.innerHTML = 'GỬI YÊU CẦU ĐẶT HÀNG';
-        }
-
-        loadProducts();
-
-        // ---------------------------------------------------------
-        // LỆNH BÍ MẬT CỦA BÀ CHỦ: NHẤN ALT + A ĐỂ VÀO TRANG ADMIN
-        // ---------------------------------------------------------
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && (event.key === 'a' || event.key === 'A')) {
-                window.location.href = 'admin.html';
-            }
-        });
-
+        loadData();
     </script>
-    </body>
-<style>
-        .contact-widgets { position: fixed; bottom: 20px; left: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
-        .widget-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.3s; }
-        .btn-call { background: #00a854; } /* Màu xanh lá cho nút Gọi */
-        .btn-mess { background: #0068ff; } /* Màu xanh dương cho nút Messenger */
-        .widget-btn:hover { transform: scale(1.1); color: white; }
-    </style>
-
-    <div class="contact-widgets">
-        <a href="tel:0978612816" class="widget-btn btn-call" title="Gọi điện ngay"><i class="fa-solid fa-phone-volume"></i></a>
-        <a href="https://m.me/hoangoanhboutique" target="_blank" class="widget-btn btn-mess" title="Chat Messenger"><i class="fa-brands fa-facebook-messenger"></i></a>
-    </div>
+</body>
 </html>
